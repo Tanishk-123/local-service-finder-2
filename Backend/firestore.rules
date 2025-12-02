@@ -1,0 +1,26 @@
+
+// basic placeholder until full rules
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    match /serviceProviders/{providerId} {
+      allow read: if request.auth != null;
+      allow write: if false; // only through cloud functions
+    }
+
+    match /bookings/{bookingId} {
+      allow read, write: if false; // done through functions
+    }
+
+    match /{document=**} {
+      allow read: if false;
+      allow write: if false;
+    }
+
+  }
+}
