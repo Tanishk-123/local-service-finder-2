@@ -1,61 +1,153 @@
-/users/{userId}
-  uid, role, name, email, phone?, city?, fcmTokens: string[], createdAt, updatedAt, organizationRef?
+  /users/{userId}
+  uid: string
+  role: "customer" | "service-provider" | "admin"
+  name: string
+  email: string
+  phone?: string
+  city?: string
+  fcmTokens: string[]
+  organizationRef?: /providerOrganizations/{orgId}
+  createdAt: timestamp
+  updatedAt: timestamp
+
 
 /providerOrganizations/{orgId}
-  orgId, name, address, city, contactInfo, memberRefs: [ /users/{uid} ], createdAt, updatedAt
+  orgId: string
+  name: string
+  address: string
+  city: string
+  contactInfo: {
+    phone: string
+    email?: string
+  }
+  memberRefs: [ /users/{uid} ]          // array of user document references
+  createdAt: timestamp
+  updatedAt: timestamp
+
 
 /serviceProviders/{providerId}
-  providerId
+  providerId: string
   ownerUserRef: /users/{uid}
-  type: "individual"|"organization"
+  type: "individual" | "organization"
   organizationRef?: /providerOrganizations/{orgId}
+
   approved: boolean
-  displayName
-  services: string[]
-  expertise: string
-  basePrice: number
-  additionalCostRules: map
+  active: boolean
+
+  displayName: string
+  services: string[]              // e.g. ["plumbing", "cleaning"]
+  expertise: string               // description of expertise
+  basePrice: number               // starting price
+  additionalCostRules: map        // dynamic cost rules
+
   city: string
   geoPoint?: geopoint
   timezone: string
-  rating: { avg: number, count: number }
-  active: boolean
-  contactInfo: { phoneMasked: string, phoneFull?: string, isPhoneMasked: boolean }
-  recurringAvailability: [ { weekday: number, startLocal: "HH:mm", endLocal:"HH:mm", slotDurationMins: number, capacity: number } ]
-  createdAt, updatedAt
+
+  rating: {
+    avg: number
+    count: number
+  }
+
+  contactInfo: {
+    phoneMasked: string
+    phoneFull?: string
+    isPhoneMasked: boolean
+  }
+
+  recurringAvailability: [
+    {
+      weekday: number                 // 0–6
+      startLocal: "HH:mm"
+      endLocal: "HH:mm"
+      slotDurationMins: number
+      capacity: number
+    }
+  ]
+
+  createdAt: timestamp
+  updatedAt: timestamp
+
 
 /serviceProviders/{providerId}/slots/{slotId}
-  slotId
+  slotId: string
   startAtUtc: timestamp
   endAtUtc: timestamp
   startAtLocal?: string
   timezone: string
+
   capacity: number
   bookedCount: number
-  status: "open"|"full"|"cancelled"
-  createdAt, updatedAt
+
+  status: "open" | "full" | "cancelled"
+
+  createdAt: timestamp
+  updatedAt: timestamp
+
 
 /bookings/{bookingId}
-  bookingId
+  bookingId: string
+
   providerRef: /serviceProviders/{providerId}
   customerRef: /users/{uid}
-  serviceType: string
   slotRef?: /serviceProviders/{providerId}/slots/{slotId}
-  slotStartAtUtc, slotEndAtUtc
-  status: "pending"|"confirmed"|"rejected"|"auto_cancelled"|"cancelled"|"completed"
+
+  serviceType: string
+
+  slotStartAtUtc: timestamp
+  slotEndAtUtc: timestamp
+
+  status: 
+    "pending" |
+    "confirmed" |
+    "rejected" |
+    "auto_cancelled" |
+    "cancelled" |
+    "completed"
+
   pendingSince: timestamp
+
   reminderScheduled: boolean
   reminderSent: boolean
-  customerConsent: { phoneStored: boolean, preciseLocationStored: boolean }
-  customerLocation: { city, address?, lat?, lng? }
+
+  customerConsent: {
+    phoneStored: boolean
+    preciseLocationStored: boolean
+  }
+
+  customerLocation: {
+    city: string
+    address?: string
+    lat?: number
+    lng?: number
+  }
+
   providerContactReleasedAt?: timestamp
-  createdAt, updatedAt
+
+  createdAt: timestamp
+  updatedAt: timestamp
+
 
 /reviews/{reviewId}
-  reviewId, providerRef, bookingRef, customerRef, rating, comment, createdAt
+  reviewId: string
+  providerRef: /serviceProviders/{providerId}
+  bookingRef: /bookings/{bookingId}
+  customerRef: /users/{uid}
+  rating: number
+  comment: string
+  createdAt: timestamp
+
 
 /notifications/{notificationId}
-  toUserRef, type, payload, sentAt, status
+  toUserRef: /users/{uid}
+  type: string
+  payload: map
+  sentAt: timestamp
+  status: "sent" | "delivered" | "read"
+
 
 /consents/{consentId}
-  userRef, type, consentGiven, timestamp
+  userRef: /users/{uid}
+  type: string
+  consentGiven: boolean
+  timestamp: timestamp
