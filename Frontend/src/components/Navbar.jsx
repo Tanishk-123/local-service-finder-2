@@ -38,10 +38,13 @@ export default function Navbar() {
             <span className="small" style={{ color: "white" }}>
               Hi, {user.name}
             </span>
-            <button className="btn" onClick={logout}>Logout</button>
+            <button className="btn secondary" onClick={logout}>Logout</button>
           </>
         ) : (
-          <Link to="/login" className="btn secondary">Login / Signup</Link>
+          <>
+          <Link to="/login" className="btn secondary">Login</Link>
+          <Link to="/register" className="btn secondary">Sign up</Link>
+          </>
         )}
       </div>
     </header>

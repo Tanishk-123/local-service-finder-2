@@ -145,19 +145,6 @@ const Home = () => {
           <FaPhoneAlt /> Call Now
         </motion.a>
       </motion.section>
-
-      {/* Footer-like Info Section */}
-      <footer
-        style={{
-          background: "#2b2b52",
-          color: "#fff",
-          textAlign: "center",
-          padding: "1.5rem",
-          marginTop: "2rem",
-        }}
-      >
-        <p>© {new Date().getFullYear()} Local Service Finder. All rights reserved.</p>
-      </footer>
     </div>
   );
 };
