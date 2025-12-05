@@ -3,15 +3,15 @@
   role: "customer" | "service-provider" | "admin"
   name: string
   email: string
-  phone?: string
+  phone?: string   // stored only if consented
   city?: string
-  fcmTokens: string[]
+  fcmTokens: string[]    // device tokens
   organizationRef?: /providerOrganizations/{orgId}
   createdAt: timestamp
   updatedAt: timestamp
 
 
-/providerOrganizations/{orgId}
+/providerOrganizations/{orgId}  // optional for org provider
   orgId: string
   name: string
   address: string
@@ -20,18 +20,18 @@
     phone: string
     email?: string
   }
-  memberRefs: [ /users/{uid} ]          // array of user document references
+  memberRefs: [ /users/{uid} ]          // array of user document references and it is optional
   createdAt: timestamp
   updatedAt: timestamp
 
 
 /serviceProviders/{providerId}
   providerId: string
-  ownerUserRef: /users/{uid}
+  ownerUserRef: /users/{uid}   // owner account
   type: "individual" | "organization"
   organizationRef?: /providerOrganizations/{orgId}
 
-  approved: boolean
+  approved: boolean   // admin verification flag or approved by a automated service on the backend
   active: boolean
 
   displayName: string
@@ -40,9 +40,9 @@
   basePrice: number               // starting price
   additionalCostRules: map        // dynamic cost rules
 
-  city: string
-  geoPoint?: geopoint
-  timezone: string
+  city: string    // cononical city string (exact match)
+  geoPoint?: geopoint  // optional; store only if consented
+  timezone: string    // IANA tz, e.g., "Asia/Kolkata"
 
   rating: {
     avg: number
@@ -58,10 +58,10 @@
   recurringAvailability: [
     {
       weekday: number                 // 0–6
-      startLocal: "HH:mm"
-      endLocal: "HH:mm"
-      slotDurationMins: number
-      capacity: number
+      startLocal: "HH:mm"   // "09:00"
+      endLocal: "HH:mm"    //"17:00"
+      slotDurationMins: number   // 60
+      capacity: number  //1
     }
   ]
 
@@ -73,11 +73,11 @@
   slotId: string
   startAtUtc: timestamp
   endAtUtc: timestamp
-  startAtLocal?: string
-  timezone: string
+  startAtLocal?: string  (optional human readable)
+  timezone: string        
 
   capacity: number
-  bookedCount: number
+  bookedCount: number 
 
   status: "open" | "full" | "cancelled"
 
@@ -105,7 +105,7 @@
     "cancelled" |
     "completed"
 
-  pendingSince: timestamp
+  pendingSince: timestamp  // used to Auto-cancel after 1 hour
 
   reminderScheduled: boolean
   reminderSent: boolean
@@ -118,7 +118,7 @@
   customerLocation: {
     city: string
     address?: string
-    lat?: number
+    lat?: number  // lat/lng only if consented
     lng?: number
   }
 
@@ -133,12 +133,12 @@
   providerRef: /serviceProviders/{providerId}
   bookingRef: /bookings/{bookingId}
   customerRef: /users/{uid}
-  rating: number
+  rating: number (1...5)
   comment: string
   createdAt: timestamp
 
 
-/notifications/{notificationId}
+/notifications/{notificationId}  // optional audit trail
   toUserRef: /users/{uid}
   type: string
   payload: map
