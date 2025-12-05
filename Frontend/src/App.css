@@ -163,7 +163,8 @@ body {
   text-align: center;
   color: white;
   background: #0f1724;
-  margin-top: 30px;
+  /* margin-top: 30px; */  
+  /* hotfix to remove space above footer*/
 }
 
 /* Small helpers */
