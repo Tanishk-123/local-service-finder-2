@@ -1,142 +1,98 @@
-import React from "react";
+
+// Frontend/src/pages/About.jsx
+import "../styles/about.css";
 import { motion } from "framer-motion";
 import { FaTools, FaUsers, FaMapMarkedAlt, FaStar, FaHandshake } from "react-icons/fa";
+import "../styles/about.css"; // import the stylesheet (create this file or import into App.css)
 
 const About = () => {
-  return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-indigo-50 to-white py-20 px-6 sm:px-16">
-      {/* Floating Background Circles */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+  const stats = [
+    { icon: <FaUsers />, title: "Happy Users", value: "50K+" },
+    { icon: <FaTools />, title: "Services Available", value: "120+" },
+    { icon: <FaMapMarkedAlt />, title: "Cities Covered", value: "85+" },
+    { icon: <FaHandshake />, title: "Verified Professionals", value: "10K+" },
+  ];
 
-      {/* Intro Section */}
-      <motion.div
-        className="max-w-6xl mx-auto text-center"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <h1 className="text-5xl font-extrabold text-indigo-700 mb-6">
-          About Local Service Finder
-        </h1>
-        <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
-          Welcome to <strong>Local Service Finder</strong> — a modern platform connecting people
-          with **trusted, skilled professionals** nearby. Whether it’s plumbing, electrical work,
-          tutoring, or cleaning — we make your life easier with verified experts and instant booking.
+  const features = [
+    {
+      icon: <FaTools />,
+      title: "All-in-One Service Hub",
+      desc: "Find every service you need — electricians, tutors, repairmen, cleaners, and many more."
+    },
+    {
+      icon: <FaUsers />,
+      title: "Verified & Rated Experts",
+      desc: "We onboard only verified service providers, ensuring safe, reliable, and quality service."
+    },
+    {
+      icon: <FaMapMarkedAlt />,
+      title: "Smart Local Search",
+      desc: "Instantly discover professionals near you with AI-powered location-based results."
+    },
+    {
+      icon: <FaStar />,
+      title: "Reviews & Trust",
+      desc: "Read honest feedback and ratings before hiring — transparency you can rely on."
+    },
+  ];
+
+  return (
+    <div className="about-page-wrapper">
+      {/* Floating Background Circles */}
+      <div className="bg-circle circle-left" aria-hidden="true" />
+      <div className="bg-circle circle-right" aria-hidden="true" />
+
+      {/* Intro */}
+      <motion.div className="about-intro" initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+        <h1 className="about-title">About Local Service Finder</h1>
+        <p className="about-lead">
+          Welcome to <strong>Local Service Finder</strong> — a modern platform connecting people with trusted, skilled professionals nearby. Whether it’s plumbing, electrical work, tutoring, or cleaning — we make your life easier with verified experts and instant booking.
         </p>
       </motion.div>
 
-      {/* Stats Section */}
-      <motion.div
-        className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 max-w-5xl mx-auto text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4, duration: 1 }}
-      >
-        {[
-          { icon: <FaUsers />, title: "Happy Users", value: "50K+" },
-          { icon: <FaTools />, title: "Services Available", value: "120+" },
-          { icon: <FaMapMarkedAlt />, title: "Cities Covered", value: "85+" },
-          { icon: <FaHandshake />, title: "Verified Professionals", value: "10K+" },
-        ].map((stat, i) => (
-          <motion.div
-            key={i}
-            whileHover={{ scale: 1.08 }}
-            className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all"
-          >
-            <div className="text-indigo-600 text-5xl mb-3">{stat.icon}</div>
-            <h3 className="text-2xl font-bold text-gray-800">{stat.value}</h3>
-            <p className="text-gray-600 mt-1">{stat.title}</p>
+      {/* Stats */}
+      <motion.div className="about-stats-grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4, duration: 1 }}>
+        {stats.map((s, i) => (
+          <motion.div className="about-stat-card" key={i} whileHover={{ scale: 1.05 }}>
+            <div className="stat-icon">{s.icon}</div>
+            <div className="stat-value">{s.value}</div>
+            <div className="stat-label">{s.title}</div>
           </motion.div>
         ))}
       </motion.div>
 
-      {/* Features Section */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mt-20 max-w-6xl mx-auto">
-        {[
-          {
-            icon: <FaTools className="text-indigo-600 text-4xl mb-3" />,
-            title: "All-in-One Service Hub",
-            desc: "Find every service you need — electricians, tutors, repairmen, cleaners, and many more.",
-          },
-          {
-            icon: <FaUsers className="text-green-600 text-4xl mb-3" />,
-            title: "Verified & Rated Experts",
-            desc: "We onboard only verified service providers, ensuring safe, reliable, and quality service.",
-          },
-          {
-            icon: <FaMapMarkedAlt className="text-pink-600 text-4xl mb-3" />,
-            title: "Smart Local Search",
-            desc: "Instantly discover professionals near you with AI-powered location-based results.",
-          },
-          {
-            icon: <FaStar className="text-yellow-500 text-4xl mb-3" />,
-            title: "Reviews & Trust",
-            desc: "Read honest feedback and ratings before hiring — transparency you can rely on.",
-          },
-        ].map((item, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ scale: 1.05, rotate: 1 }}
-            className="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl text-center transition-all"
-          >
-            {item.icon}
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">{item.title}</h3>
-            <p className="text-gray-600 text-sm">{item.desc}</p>
+      {/* Features */}
+      <div className="about-features-grid">
+        {features.map((f, idx) => (
+          <motion.div className="about-feature-card" key={idx} whileHover={{ scale: 1.03 }}>
+            <div className="feature-icon">{f.icon}</div>
+            <h3 className="feature-title">{f.title}</h3>
+            <p className="feature-desc">{f.desc}</p>
           </motion.div>
         ))}
       </div>
 
-      {/* Mission Section */}
-      <motion.div
-        className="max-w-5xl mx-auto mt-24 text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6, duration: 1 }}
-      >
-        <h2 className="text-3xl font-bold text-indigo-700 mb-4">Our Mission</h2>
-        <p className="text-gray-700 leading-relaxed text-lg">
-          We aim to **empower local communities** by bridging the gap between people who need services
-          and those who offer them. We believe in trust, accessibility, and simplicity — allowing
-          everyone to find skilled help with confidence and convenience.
+      {/* Mission */}
+      <motion.section className="about-mission" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+        <h2>Our Mission</h2>
+        <p>
+          We aim to <strong>empower local communities</strong> by bridging the gap between people who need services and those who offer them. We believe in trust, accessibility, and simplicity — allowing everyone to find skilled help with confidence and convenience.
         </p>
-      </motion.div>
+      </motion.section>
 
-      {/* Our Story Section */}
-      <motion.div
-        className="max-w-5xl mx-auto mt-20 bg-indigo-50 p-10 rounded-3xl shadow-inner"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.8 }}
-      >
-        <h2 className="text-3xl font-semibold text-indigo-700 mb-4 text-center">
-          Our Story
-        </h2>
-        <p className="text-gray-700 text-lg leading-relaxed">
-          Local Service Finder started with a vision — to make everyday help **fast, transparent, and accessible**.  
-          What began as a small college project soon turned into a trusted platform used by thousands.
-          Today, we continue to innovate by integrating live chat, smart filters, and real-time booking
-          updates to make service access as simple as ordering a coffee.
+      {/* Story */}
+      <motion.section className="about-story" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
+        <h2>Our Story</h2>
+        <p>
+          Local Service Finder started with a vision — to make everyday help <strong>fast, transparent, and accessible</strong>. What began as a small college project soon turned into a trusted platform used by thousands. Today, we continue to innovate by integrating live chat, smart filters, and real-time booking updates to make service access as simple as ordering a coffee.
         </p>
-      </motion.div>
+      </motion.section>
 
-      {/* Call to Action */}
-      <motion.div
-        className="text-center mt-20"
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 1 }}
-      >
-        <h2 className="text-3xl font-bold text-indigo-800 mb-4">
-          Be Part of the Change
-        </h2>
-        <p className="text-gray-700 text-lg mb-8 max-w-2xl mx-auto">
-          Join our growing community of professionals and users making everyday life simpler.
-          Whether you’re searching for help or offering your skills — we welcome you!
-        </p>
-        <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-4 rounded-full font-medium shadow-md hover:shadow-lg transition-all">
-          Join Local Service Finder
-        </button>
+      {/* CTA */}
+      <motion.div className="about-cta" initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1 }}>
+        <h3>Be Part of the Change</h3>
+        <p>Join our growing community of professionals and users making everyday life simpler.</p>
+        <button className="cta-button">Join Local Service Finder</button>
       </motion.div>
     </div>
   );
