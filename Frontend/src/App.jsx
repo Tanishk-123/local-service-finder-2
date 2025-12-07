@@ -8,7 +8,7 @@ import { DataProvider } from "./contexts/DataContext";
 // Components
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { CustomerRoute, ProviderRoute } from "./components/ProtectedRoute";
 
 // Pages
 import Home from "./pages/Home";
@@ -40,9 +40,9 @@ function App() {
               <Route
                 path="/booking/:id"
                 element={
-                  <ProtectedRoute>
+                  <CustomerRoute>
                     <Booking />
-                  </ProtectedRoute>
+                  </CustomerRoute>
                 }
               />
             </Routes>

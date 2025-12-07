@@ -131,7 +131,7 @@ export default function Register() {
               Customer / Service Provider
               </option>
               <option value="customer">Customer</option>
-            <option value="service-provider">Service Provider</option>
+            <option value="service_provider">Service Provider</option>
           </select>
            {errors.role && (
             <div style={{ color: "#c00", fontSize: "0.9rem" }}>
