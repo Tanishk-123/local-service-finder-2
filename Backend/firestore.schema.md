@@ -1,6 +1,6 @@
   /users/{userId}
   uid: string
-  role: "customer" | "service-provider" | "admin"
+  role: "customer" | "service_provider"
   name: string
   email: string
   phone?: string   // stored only if consented

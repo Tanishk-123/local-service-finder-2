@@ -33,6 +33,7 @@ Thumbs.db
 .vscode/
 .idea/
 
+docs/
 # Optional: Ignore lock files if team uses different package managers
 # package-lock.json
 # yarn.lock
